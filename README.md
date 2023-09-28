@@ -56,7 +56,9 @@ python extract_tad_feature.py --data_set '<dataset_name>' \
 
 Download the HMDB51 dataset from: http://serre-lab.clps.brown.edu/wp-content/uploads/2013/10/hmdb51_org.rar
 
-Run `Datasets/create_hmdb_datasets.sh`. Use `Accurate-Interpretable-VAD/data/count_frames.py` to create the 
+Run `Datasets/create_hmdb_datasets.sh`. 
+
+Use `Accurate-Interpretable-VAD/data/count_frames.py` to create the 
 `*_clip_lengths.npy` files.
 
 ## 5. Validate 'data' Folder
