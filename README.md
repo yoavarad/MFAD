@@ -12,9 +12,9 @@ git clone https://github.com/talreiss/Accurate-Interpretable-VAD.git
 ## 2. Modify AI-VAD
 
 Replace original `evaluate.py`, `video_dataset.py`, `score_calibration_vmae.py` with the modified 
-versions in the AI-VAD directory in this repository.
+versions in the `AI-VAD` directory in this repository.
 
-Move `final_scores.py` to `Accurate-Interpretable-VAD/`.
+Move `final_scores.py` to `Accurate-Interpretable-VAD`.
 
 Use `score_calibration_vmae.py` in addition to `score_calibration.py` to calibrate the scores for 
 the video encoding features.
