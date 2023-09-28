@@ -12,6 +12,8 @@ from torchvision import transforms
 import models  # noqa: F401
 from dataset.loader import get_video_loader
 
+from tqdm import tqdm
+
 
 def to_normalized_float_tensor(vid):
     return vid.permute(3, 0, 1, 2).to(torch.float32) / 255
@@ -56,8 +58,8 @@ def get_args():
 
     parser.add_argument(
         '--data_set',
-        default='THUMOS14',
-        choices=['THUMOS14', 'FINEACTION'],
+        default='HMDB51_AD',
+        choices=['THUMOS14', 'FINEACTION', 'HMDB-AD', 'HMDB-Violence', 'ped2', 'avenue', 'shanghaitech', 'UCF-Crime'],
         type=str,
         help='dataset')
 
@@ -94,6 +96,9 @@ def get_start_idx_range(data_set):
     def fineaction_range(num_frames):
         return range(0, num_frames - 15, 16)
 
+    def default_range(num_frames):
+        return range(0, num_frames - 15) #, 16)
+
     if data_set == 'THUMOS14':
         return thumos14_range
     elif data_set == 'FINEACTION':
@@ -105,7 +110,7 @@ def get_start_idx_range(data_set):
 def extract_feature(args):
     # preparation
     if not os.path.exists(args.save_path):
-        os.makedirs(args.save_path)
+        os.makedirs(args.save_path, exist_ok=True)
     video_loader = get_video_loader()
     start_idx_range = get_start_idx_range(args.data_set)
     transform = transforms.Compose(
@@ -121,7 +126,7 @@ def extract_feature(args):
         args.model,
         img_size=224,
         pretrained=False,
-        num_classes=710,
+        num_classes=174,
         all_frames=16,
         tubelet_size=2,
         drop_path_rate=0.3,

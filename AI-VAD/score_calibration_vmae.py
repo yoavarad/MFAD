@@ -8,7 +8,7 @@ import glob
 
 def compute_calibration_parameters(args, root="data/"):
     train_clip_lengths = np.load(os.path.join(root, args.dataset_name, "train_clip_lengths.npy"))
-    vmae_root = "../VideoMAEv2/extracted_features/continuous"
+    vmae_root = "../VideoMAEv2/extracted_features/vit_g_hybrid_pt_1200e_ssv2_ft"
     train_deep_features_files = glob.glob(f"{vmae_root}/{args.dataset_name}/training/*.npy")
     train_deep_features_files.sort()
     train_deep_features = np.concatenate([np.load(f) for f in
@@ -18,14 +18,9 @@ def compute_calibration_parameters(args, root="data/"):
     all_ranges = np.arange(0, len(train_deep_features))
     features_scores = []
 
-    print(train_clip_lengths)
-    print(len(train_deep_features))
-
     prev = 0
     for idx in tqdm(range(len(train_clip_lengths)), desc="Computing calibration parameters"):
         cur = train_clip_lengths[idx]
-        print(prev, cur)
-        print(prev - 15 * idx, cur - 15 * (idx + 1))
 
         cur_video_range = np.arange(prev - 15 * idx, cur - 15 * (idx + 1))
         complement_indices = np.setdiff1d(all_ranges, cur_video_range)

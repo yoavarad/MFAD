@@ -188,16 +188,6 @@ class VideoDataset(Dataset):
                 self.all_gt.append(gt)
             self.all_gt = torch.cat(self.all_gt, 0)
 
-        elif self.dataset_name == 'UCF-Crime':
-            self.all_gt = []
-            for i, (_, video) in enumerate(self.videos.items()):
-                if 'Normal_Videos' in video['path']:
-                    gt = torch.zeros(video['length'])
-                else:
-                    gt = torch.ones(video['length'])
-                self.all_gt.append(gt)
-            self.all_gt = torch.cat(self.all_gt, 0)
-
     def get_sequence(self, index):
         """
         This function gets an index and returns a clip (of size self.sequence_length).
@@ -429,16 +419,6 @@ class VideoDatasetWithFlows(Dataset):
                         normal = True
                         break
                 if normal:
-                    gt = torch.zeros(video['length'])
-                else:
-                    gt = torch.ones(video['length'])
-                self.all_gt.append(gt)
-            self.all_gt = torch.cat(self.all_gt, 0)
-
-        elif self.dataset_name == 'UCF-Crime':
-            self.all_gt = []
-            for i, (_, video) in enumerate(self.videos.items()):
-                if 'Normal_Videos' in video['path']:
                     gt = torch.zeros(video['length'])
                 else:
                     gt = torch.ones(video['length'])
